@@ -41,6 +41,8 @@ model Stores {
   userId    Int      @unique @map("userId")
   category  category @map("category")
   storeName String   @map("storeName")
+  number    String   @map("number")
+  addr      String   @map("addr")
 
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
