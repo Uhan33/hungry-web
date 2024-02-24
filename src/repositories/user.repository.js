@@ -24,7 +24,12 @@ export class UsersRepository{
     
         return createdUser;
     }
-    loginUser = async()=>{}
+    loginUser = async(email)=>{
+        const user = await this.prisma.users.findFirst({
+            where: {email}
+        })
+        return user
+    }
     findByUserEmail = async(email)=>{
         const emailUser = await this.prisma.users.findFirst({
             where:{
