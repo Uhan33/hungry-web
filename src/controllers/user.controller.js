@@ -14,7 +14,7 @@ export class UsersController {
             if (emailPattern.test(email)==false) throw new Error ('이메일 형식이 잘못 되었습니다.')
             if (numberPattern.test(number)==false) throw new Error ('전화번호 형식이 올바르지 않습니다.')
             const createdUser = await this.usersService.createUser(email, name, password, confirmPassword, addr, number, role);
-            return res.status(201).json({ data: createdUser });
+            return res.status(201).json({message :'회원가입 성공', data: createdUser });
         } catch (err) {
             next(err);
         }
@@ -24,7 +24,7 @@ export class UsersController {
         try {
             const { email, password } = req.body;
             const loginUser = await this.usersService.loginUser(email, password)
-            return res.status(201).json({data:loginUser})
+            return res.status(201).json({message :'로그인 성공', data:loginUser})
         } catch (err) {
             next(err);
         }

@@ -24,17 +24,16 @@ export class UsersRepository{
     
         return createdUser;
     }
-    loginUser = async(email)=>{
+    loginUser = async(email, password)=>{
         const user = await this.prisma.users.findFirst({
-            where: {email}
+            where: { email },
+            select : {email: true, password: true}
         })
         return user
     }
-    findByUserEmail = async(email)=>{
+    findByUserEmail = async(email,password)=>{
         const emailUser = await this.prisma.users.findFirst({
-            where:{
-                email
-            }
+            where:{email}
         })
         return emailUser
     }
