@@ -6,23 +6,25 @@ export default class OrdersRepository {
   order = async (userId, storeId, menus) => {
     const menuInfo = [];
     let totalPrice = 0;
+    let menuObj = {};
+    menus.map((e) => {
+      menuObj[e.menu] = e.quantity;
+    });
 
-    for (let i = 0; i < menus.length; i++) {
-      const menu = await this.prisma.menus.findFirst({
-        where: {
-          AND: [{ storeId: +storeId }, { menuId: +menus[i].menu }],
-        },
-        select: {
-          menuId: true,
-          menuName: true,
-          price: true,
-        },
-      });
+    console.log(menuObj);
 
-      if (!menu) throw new Error(`menuId : ${menus[i]} 인 메뉴가 없습니다.`);
+    const menu = await this.prisma.menus.findMany({
+      where: {
+        AND: [{ storeId: +storeId }, { menuId: { in: menus.map((e) => e.menu) } }],
+      },
+      select: {
+        menuId: true,
+        menuName: true,
+        price: true,
+      },
+    });
 
-      menuInfo.push({ menu: menu, quantity: menus[i].quantity });
-    }
+    if (menu.length !== menus.length) throw new Error('메뉴 정보가 올바르지 않습니다.');
 
     let order;
 
@@ -35,14 +37,14 @@ export default class OrdersRepository {
         },
       });
 
-      for (let i = 0; i < menuInfo.length; i++) {
+      for (let i = 0; i < menu.length; i++) {
         const item = await tx.orderItems.create({
           data: {
             orderId: order.orderId,
-            menuId: menuInfo[i].menu.menuId,
-            menuName: menuInfo[i].menu.menuName,
-            price: menuInfo[i].menu.price,
-            quantity: menuInfo[i].quantity,
+            menuId: menu[i].menuId,
+            menuName: menu[i].menuName,
+            price: menu[i].price,
+            quantity: menuObj[menu[i].menuId],
           },
         });
         totalPrice += item.price * item.quantity;
