@@ -4,7 +4,7 @@ export class UsersService{
     constructor(usersReposity){
         this.usersReposity = usersReposity
     }
-    createUser = async(email, name, password, addr, number, role)=>{
+    createUser = async(email, name, password, confirmPassword, addr, number, role)=>{
         const user = await this.usersReposity.findByUserEmail(email)
         if (user) throw new Error ('이미 존재하는 email입니다.')
         const hashedPassword = await bcrypt.hash(password, 10)

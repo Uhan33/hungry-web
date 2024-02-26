@@ -2,7 +2,7 @@ export class UsersRepository {
   constructor(prisma) {
     this.prisma = prisma;
   }
-  createUser = async (email, name, password, confirmPassword, addr, number, role) => {
+  createUser = async (email, name, password, addr, number, role) => {
     const createdUser = await this.prisma.users.create({
       data: {
         email,
@@ -32,11 +32,9 @@ export class UsersRepository {
     return user;
   };
   findByUserEmail = async (email) => {
-    findByUserEmail = async (email, password) => {
       const emailUser = await this.prisma.users.findFirst({
         where: { email },
       });
       return emailUser;
-    };
   };
 }
