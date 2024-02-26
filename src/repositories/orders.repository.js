@@ -4,14 +4,11 @@ export default class OrdersRepository {
   }
 
   order = async (userId, storeId, menus) => {
-    const menuInfo = [];
     let totalPrice = 0;
     let menuObj = {};
     menus.map((e) => {
       menuObj[e.menu] = e.quantity;
     });
-
-    console.log(menuObj);
 
     const menu = await this.prisma.menus.findMany({
       where: {
