@@ -19,7 +19,7 @@ describe('Users Unit Test', () => {
   describe('유저 생성', () => {
     test('유저 생성 성공', async () => {
         const createdUser ={
-            
+            eamil
         }
         mockPrisma.users.create.mockReturnValue(mockReturn);
     
