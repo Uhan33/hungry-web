@@ -28,6 +28,7 @@ model Point {
   userId  Int    @unique @map("userId")
   money   Int    @map("money")
   salesAmount Int? @map("salesAmount")
+
   users Users @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
 model Stores {
@@ -45,7 +46,7 @@ model Stores {
   users Users @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
 model Menus {
-  menuId    Int    @id @default(autoincrement()) @map("userId")
+  menuId    Int    @id @default(autoincrement()) @map("menuId")
   storeId   Int    @map("storeId")
   menuName  String @map("menuName")
   menuImage String @map("menuImage")
@@ -83,7 +84,8 @@ model OrderItems {
   menuId    Int      @map("menuId")
   menuName  String   @map("menuName")
   price     Int      @map("price")
-  createdAt DateTime @default(now()) @map("createdAt")
+  quantity  Int      @map("quantity")
+
   orders Orders @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
 }
 enum role {
