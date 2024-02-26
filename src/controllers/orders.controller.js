@@ -5,14 +5,14 @@ export default class OrdersController {
 
   order = async (req, res, next) => {
     try {
-      const { storeId, menus } = req.body;
-    //   console.log(storeId, menus);
+      // 로그인 기능 merge하면 수정 예정정
+      const { userId, storeId, menus } = req.body;
 
       if(!storeId || !menus)
         return res.status(400).json({message: '주문 정보가 올바르지 않습니다,'});
 
-      const order = await this.ordersService.order(storeId, menus);
-      return res.status(201).json({ message: '주문 완료' });
+      const order = await this.ordersService.order(userId, storeId, menus);
+      return res.status(201).json({ data: order });
     } catch (err) {
       next(err);
     }
