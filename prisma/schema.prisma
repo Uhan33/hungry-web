@@ -1,18 +1,14 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
 model Users {
   userId   Int    @id @default(autoincrement()) @map("userId")
   email    String @unique @map("email")
@@ -22,21 +18,18 @@ model Users {
   number   String @unique @map("number")
   role     role   @map("role")
   createdAt DateTime @default(now()) @map("createdAt")
-
   stores  Stores?
   orders  Orders[]
   reviews Reviews[]
   point   Point?
 }
-
 model Point {
   pointId String @id @default(uuid()) @map("pointId")
   userId  Int    @unique @map("userId")
   money   Int    @map("money")
-
+  salesAmount Int? @map("salesAmount")
   users Users @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
-
 model Stores {
   storeId   Int      @id @default(autoincrement()) @map("storeId")
   userId    Int      @unique @map("userId")
@@ -44,17 +37,13 @@ model Stores {
   storeName String   @map("storeName")
   number    String   @map("number")
   addr      String   @map("addr")
-
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
-
   menus   Menus[]
   orders  Orders[]
   reviews Reviews[]
-
   users Users @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
-
 model Menus {
   menuId    Int    @id @default(autoincrement()) @map("menuId")
   storeId   Int    @map("storeId")
@@ -62,42 +51,32 @@ model Menus {
   menuImage String @map("menuImage")
   price     Int    @map("price")
   content   String @map("content")
-
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
-
   stores Stores @relation(fields: [storeId], references: [storeId], onDelete: Cascade)
 }
-
 model Orders {
   orderId    Int    @id @default(autoincrement()) @map("orderId")
   userId     Int    @map("userId")
   storeId    Int    @map("storeId")
   status     status @default(order) @map("status")
   totalPrice Int    @map("totalPrice")
-
   createdAt DateTime @default(now()) @map("createdAt")
-
   orderItems OrderItems[]
-
   users  Users  @relation(fields: [userId], references: [userId], onDelete: Cascade)
   stores Stores @relation(fields: [storeId], references: [storeId], onDelete: Cascade)
 }
-
 model Reviews {
   reviewId      Int    @id @default(autoincrement()) @map("reviewId")
   userId        Int    @map("userId")
   storeId       Int    @map("storeId")
   reviewContent String @map("reviewContent")
   rating        Int    @map("rating")
-
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
-
   users  Users  @relation(fields: [userId], references: [userId], onDelete: Cascade)
   stores Stores @relation(fields: [storeId], references: [storeId], onDelete: Cascade)
 }
-
 model OrderItems {
   itemId    Int      @id @default(autoincrement()) @map("itemId")
   orderId   Int      @map("orderId")
@@ -108,12 +87,10 @@ model OrderItems {
 
   orders Orders @relation(fields: [orderId], references: [orderId], onDelete: Cascade)
 }
-
 enum role {
   user
   owner
 }
-
 enum category {
   korean
   asian
@@ -124,7 +101,6 @@ enum category {
   chicken
   pizza
 }
-
 enum status {
   order
   delivering
