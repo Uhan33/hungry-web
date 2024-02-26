@@ -124,21 +124,23 @@ describe('UserManagement', () => {
 
   describe('유저 로그인', () => {
     test('로그인 성공 시', async () => {
-        const loginUser = {
+        const userSignIn = {
             email: 'test14@naver.com',
             password: '123456',
         }
-      mockReq.body = loginUser
+      mockReq.body = userSignIn
 
-      mockUserService.loginUser.mockResolvedValue(loginUser);
+      mockUserService.loginUser.mockResolvedValue(userSignIn);
 
-      await mockUserService.loginUser(mockReq, mockRes, mockNext)
+    
+    
+      await usersController.userSignIn(mockReq, mockRes, mockNext);
 
       expect(mockRes.status).toHaveBeenCalledWith(201);
-    //   expect(mockRes.json).toHaveBeenCalledWith({data: loginUser})
-    //   expect(mockUserService.loginUser).toHaveBeenCalledWith(
-    //     loginUser.email,
-    //     loginUser.password)
+      expect(mockRes.json).toHaveBeenCalledWith({data: userSignIn})
+      expect(mockUserService.loginUser).toHaveBeenCalledWith(
+        userSignIn.email,
+        userSignIn.password)
     });
   });
 });
