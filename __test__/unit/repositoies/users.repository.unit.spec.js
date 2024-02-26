@@ -18,7 +18,9 @@ describe('Users Unit Test', () => {
 
   describe('유저 생성', () => {
     test('유저 생성 성공', async () => {
-        const mockReturn = 'create Return String';
+        const createdUser ={
+            
+        }
         mockPrisma.users.create.mockReturnValue(mockReturn);
     
         // createUserParams Method를 실행하기 위해 필요한 Params 입니다.
