@@ -3,8 +3,8 @@ export default class OrdersService {
         this.ordersRepository = ordersRepository;
     }
 
-    order = async (storeId, menus) => {
-        order = await this.ordersRepository(storeId, menus);
+    order = async (userId, storeId, menus) => {
+        const order = await this.ordersRepository.order(userId, storeId, menus);
 
         return order;
     }
