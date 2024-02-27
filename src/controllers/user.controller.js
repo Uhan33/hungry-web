@@ -1,6 +1,8 @@
+import { sendMail, generateValidationCode } from '../middlewares/mail.middleware.js';
 export class UsersController {
-  constructor(usersService) {
+  constructor(usersService, pointRepository) {
     this.usersService = usersService;
+    this.pointRepository = pointRepository;
   }
 
   userSignUp = async (req, res, next) => {
@@ -39,6 +41,21 @@ export class UsersController {
       res.cookie('accessToken', `Bearer ${loginUser.accessToken}`);
       res.cookie('refreshToKen', `Bearer ${loginUser.refreshToKen}`);
       return res.status(201).json({ data: loginUser });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  emailAuth = async (req, res, next) => {
+    try {
+      const { email, role, userId } = req.body;
+      const validationCode = generateValidationCode(6);
+      await sendMail(email, validationCode);
+      const token = await this.usersService.generateToken(email, role);
+      if (token) {
+        await this.pointRepository.signUpPoint(userId);
+        res.json({ token });
+      }
     } catch (err) {
       next(err);
     }
