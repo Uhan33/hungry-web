@@ -25,8 +25,6 @@ export class UsersController {
         try {
             const { email, password } = req.body;
             const loginUser = await this.usersService.loginUser(email, password)
-            res.cookie('authorization', `Bearer ${loginUser.accessToken}`);
-            res.cookie('refreshToken', `Brearer ${loginUser.refreshToken}`);
             return res.status(201).json({data:loginUser})
         } catch (err) {
             next(err);
