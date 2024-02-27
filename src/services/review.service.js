@@ -5,6 +5,7 @@ export class ReviewService {
     this.reviewRepository = reviewRepository;
   }
 
+  //유효성 검사
   async checkUser(userId, reviewId) {
     const review = await this.reviewRepository.checkUser(reviewId);
 
@@ -13,14 +14,17 @@ export class ReviewService {
     }
   }
 
+  //리뷰 생성
   async createReview(userId, storeId, reviewContent, rating) {
     return await this.reviewRepository.createReview(userId, storeId, reviewContent, rating);
   }
 
+  //리뷰 조회 (1)
   async getReview(userId) {
     return await this.reviewRepository.getReview(userId);
   }
 
+  //리뷰 수정
   async updateReview(userId, reviewId, reviewContent, rating) {
     await this.checkUser(userId, reviewId);
     const review = await this.reviewRepository.updateReview(reviewId, reviewContent, rating);
@@ -29,6 +33,7 @@ export class ReviewService {
     return review;
   }
 
+  //리뷰 삭제
   async deleteReview(userId, reviewId) {
     await this.checkUser(userId, reviewId);
     const review = await this.reviewRepository.deleteReview(reviewId);
@@ -37,6 +42,7 @@ export class ReviewService {
     return review;
   }
 
+  //리뷰 조회 (M)
   async getReviewByStoreId(storeId) {
     return await this.reviewRepository.getReviewByStoreId(storeId);
   }

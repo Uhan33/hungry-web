@@ -34,6 +34,7 @@ export class ReviewController {
     }
   }
 
+  //리류 수정
   updateReview = async (req, res, next) => {
     const { reviewContent, rating } = req.body;
     
@@ -54,6 +55,8 @@ export class ReviewController {
     }
   }
 
+  //리뷰 삭제
+  
   deleteReview = async (req, res, next) => {
     try {
       return res.status(201).json(

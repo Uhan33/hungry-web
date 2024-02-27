@@ -14,6 +14,7 @@ export class ReviewRepository {
   
   };
 
+  //리뷰 생성
   createReview = async (userId, storeId, reviewContent, rating) => {
     const review = await this.prisma.reviews.create({
       data : {
@@ -26,6 +27,7 @@ export class ReviewRepository {
     return review;
   };
 
+  //리뷰 조회 (1)
   getReview = async (userId) => {
     const getReview = await this.prisma.reviews.findMany({
       where : {
@@ -45,6 +47,7 @@ export class ReviewRepository {
     return getReview;
   };
 
+  //리뷰 수정
   updateReview = async (reviewId, reviewContent, rating) => {
     const updatedPost = await this.prisma.reviews.update({
       where: {
@@ -58,6 +61,7 @@ export class ReviewRepository {
     return updatedPost;
   }
 
+  //리뷰 삭제
   deleteReview = async (reviewId) => {
     const deletedReview = await this.prisma.reviews.delete({
       where: {
@@ -67,6 +71,7 @@ export class ReviewRepository {
     return deletedReview;
   }
 
+  //리뷰 조회 (M)
   getReviewByStoreId = async (storeId) => {
     const getReview = await this.prisma.reviews.findMany({
       where: {
