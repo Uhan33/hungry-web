@@ -12,10 +12,10 @@ const reviewService = new ReviewService(reviewRepository);
 const reviewController = new ReviewController(reviewService);
 
 //추후 미들웨어 추가
-router.post('/', reviewController.createReview);
-router.get('/', reviewController.getReview);
-router.put('/', reviewController.updateReview);
-router.delete('/', reviewController.deleteReview);
+router.post('/', authMiddleware, reviewController.createReview);
+router.get('/', authMiddleware, reviewController.getReview);
+router.put('/', authMiddleware, reviewController.updateReview);
+router.delete('/', authMiddleware, reviewController.deleteReview);
 router.get('/store', reviewController.getReviewByStoreId);
 
 export default router;

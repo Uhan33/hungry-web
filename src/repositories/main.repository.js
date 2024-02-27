@@ -3,6 +3,7 @@ export class MainRepository {
     this.prisma = prisma;
   }
 
+  //가게 검색 
   searchStore = async (keyword) => {
     const reviewList  = await this.prisma.stores.findMany({
       where: {
@@ -35,6 +36,7 @@ export class MainRepository {
   };
 
 
+  //랭킹 조회
   getRanking = async () => {
     const review = await this.prisma.stores.findMany({
       select : {

@@ -1,5 +1,6 @@
 import express from 'express';
 import { prisma } from '../utils/prisma/index.js';
+import authMiddleware from "../middlewares/auth.middleware.js";
 import OrdersController from '../controllers/orders.controller.js';
 import OrdersService from '../services/orders.service.js';
 import OrdersRepository from '../repositories/orders.repository.js';
@@ -13,7 +14,7 @@ const ordersController = new OrdersController(ordersService)
 router.post('/order', ordersController.order);
 router.get('/', ordersController.orderCheck);
 router.get('/:orderId', ordersController.orderCheckById);
-router.get('/orderComplete/:orderId', ordersController.orderComplete);
+router.get('/:orderId/orderStatusChange', ordersController.orderStatusChange);
 
 
 export default router;
