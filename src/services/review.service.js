@@ -5,14 +5,6 @@ export class ReviewService {
     this.reviewRepository = reviewRepository;
   }
 
-  //유효성 검사
-  async checkUser(userId, reviewId) {
-    const review = await this.reviewRepository.checkUser(reviewId);
-
-    if (!review || review.userId !== userId) {
-      throw new ReviewError('권한이 없습니다.');
-    }
-  }
 
   //리뷰 생성
   async createReview(userId, storeId, reviewContent, rating) {
@@ -24,6 +16,16 @@ export class ReviewService {
     return await this.reviewRepository.getReview(userId);
   }
 
+  
+  //유효성 검사
+  async checkUser(userId, reviewId) {
+    const review = await this.reviewRepository.checkUser(reviewId);
+
+    if (!review || review.userId !== userId) {
+      throw new ReviewError('권한이 없습니다.');
+    }
+  }
+  
   //리뷰 수정
   async updateReview(userId, reviewId, reviewContent, rating) {
     await this.checkUser(userId, reviewId);

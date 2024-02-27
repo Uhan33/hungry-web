@@ -6,7 +6,8 @@ let mockReviewRepository = {
   getReview: jest.fn(),
   updateReview: jest.fn(),
   deleteReview: jest.fn(),
-  getReviewByStoreId: jest.fn()
+  getReviewByStoreId: jest.fn(),
+  checkUser: jest.fn()
 };
 
 let reviewService = new ReviewService(mockReviewRepository);
@@ -67,11 +68,12 @@ describe('ReviewService Unit Test', () => {
       rating: rating
     };
 
+    mockReviewRepository.checkUser.mockResolvedValue(expectedReview);
     mockReviewRepository.updateReview.mockResolvedValue(expectedReview);
 
     const result = await reviewService.updateReview(userId, reviewId, reviewContent, rating);
     expect(result).toEqual(expectedReview);
-    expect(mockReviewRepository.updateReview).toHaveBeenCalledWith(userId, reviewId, reviewContent, rating);
+    expect(mockReviewRepository.updateReview).toHaveBeenCalledWith(expectedReview.reviewId, expectedReview.reviewContent, expectedReview.rating);
   });
 
   it('deleteReview', async () => {
@@ -85,11 +87,12 @@ describe('ReviewService Unit Test', () => {
       rating: 5
     };
 
+    mockReviewRepository.checkUser.mockResolvedValue(expectedReview);
     mockReviewRepository.deleteReview.mockResolvedValue(expectedReview);
 
     const result = await reviewService.deleteReview(userId, reviewId);
     expect(result).toEqual(expectedReview);
-    expect(mockReviewRepository.deleteReview).toHaveBeenCalledWith(userId, reviewId);
+    expect(mockReviewRepository.deleteReview).toHaveBeenCalledWith(expectedReview.reviewId);
   });
 
   it('getReviewByStoreId', async () => {

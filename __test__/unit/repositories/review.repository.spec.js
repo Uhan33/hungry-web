@@ -90,7 +90,7 @@ describe('ReviewRepository Unit Test', () => {
 
     mockPrisma.reviews.update.mockResolvedValue(expectedReview);
 
-    const result = await reviewRepository.updateReview(userId, reviewId, reviewContent, rating);
+    const result = await reviewRepository.updateReview(reviewId, reviewContent, rating);
     expect(result).toEqual(expectedReview);
     expect(mockPrisma.reviews.update).toHaveBeenCalledWith({
       where: {

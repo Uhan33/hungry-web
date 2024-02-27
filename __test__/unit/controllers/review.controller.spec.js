@@ -8,7 +8,8 @@ let mockReviewService = {
   getReview: jest.fn(),
   updateReview: jest.fn(),
   deleteReview: jest.fn(),
-  getReviewByStoreId: jest.fn()
+  getReviewByStoreId: jest.fn(),
+  checkUser: jest.fn()
 };
 
 const mockRequest = {
@@ -42,21 +43,18 @@ describe('ReviewController Unit Test', () => {
       rating : 4
     };
 
-    const requestQuery = {
-      storeId : 1,
-    };
-
-    const user = { userId : 1};
+    const storeId = 1;
+    const userId = 1;
 
     mockRequest.body = requestBody;
-    mockRequest.query = requestQuery;
-    mockRequest.user = user;
+    //mockRequest.query = { userId, storeId };
+    mockRequest.query = { storeId };
+    mockRequest.user = userId;
 
     //response
     const responseBody = { 
       reviewId : 1,
       storeId : 1,
-      userId : user.userId,
       reviewContent : requestBody.reviewContent,
       rating : requestBody.rating,
       createdAt : new Date().toString(),
@@ -69,7 +67,7 @@ describe('ReviewController Unit Test', () => {
     await reviewController.createReview(mockRequest, mockResponse, mockNext);
     
     //verify
-    expect(mockReviewService.createReview).toHaveBeenCalledWith(1, 1, 'reviewContent', 4);
+    expect(mockReviewService.createReview).toHaveBeenCalledWith(mockRequest.user.userId, 1, 'reviewContent', 4);
     expect(mockResponse.status).toHaveBeenCalledWith(201);
     expect(mockResponse.json).toHaveBeenCalledWith({
       data: responseBody,
@@ -81,11 +79,12 @@ describe('ReviewController Unit Test', () => {
   it('getReview', async () => {
     // Setup
     const userId = 1;
-    
+    //mockRequest.query = { userId };
+    mockRequest.user = userId;
+
     const responseBody = [
       {
         reviewId: 1,
-        userId: userId,
         storeId : 1,
         reviewContent : 'reviewContent',
         rating : 4,
@@ -94,7 +93,6 @@ describe('ReviewController Unit Test', () => {
       },
       {
         reviewId: 2,
-        userId: userId,
         storeId : 1,
         reviewContent : 'reviewContent',
         rating : 5,
@@ -104,13 +102,12 @@ describe('ReviewController Unit Test', () => {
     ];
 
     mockReviewService.getReview.mockReturnValue(responseBody);
-    mockRequest.user = { userId };
 
     // Execute
     await reviewController.getReview(mockRequest, mockResponse, mockNext);
 
     // Verify
-    expect(mockReviewService.getReview).toHaveBeenCalledWith(userId);
+    expect(mockReviewService.getReview).toHaveBeenCalledWith(mockRequest.user.userId);
     expect(mockResponse.status).toHaveBeenCalledWith(201);
     expect(mockResponse.json).toHaveBeenCalledWith({ data: responseBody });
   });
@@ -127,7 +124,7 @@ describe('ReviewController Unit Test', () => {
 
     mockRequest.body = requestBody;
     mockRequest.query = { reviewId };
-    mockRequest.user = { userId };
+    mockRequest.user = userId;
 
     const responseBody = {
       reviewId: 1,
@@ -145,7 +142,7 @@ describe('ReviewController Unit Test', () => {
     await reviewController.updateReview(mockRequest, mockResponse, mockNext);
 
     // Verify
-    expect(mockReviewService.updateReview).toHaveBeenCalledWith(userId, reviewId, requestBody.reviewContent, requestBody.rating);
+    expect(mockReviewService.updateReview).toHaveBeenCalledWith(reviewId, mockRequest.user.userId, requestBody.reviewContent, requestBody.rating);
     expect(mockResponse.status).toHaveBeenCalledWith(201);
     expect(mockResponse.json).toHaveBeenCalledWith({
       data: responseBody,
@@ -160,7 +157,7 @@ describe('ReviewController Unit Test', () => {
     const userId = 1;
 
     mockRequest.query = { reviewId };
-    mockRequest.user = { userId };
+    mockRequest.user = userId;
 
     const responseBody = {
       reviewId: 1,
@@ -178,7 +175,7 @@ describe('ReviewController Unit Test', () => {
     await reviewController.deleteReview(mockRequest, mockResponse, mockNext);
 
     // Verify
-    expect(mockReviewService.deleteReview).toHaveBeenCalledWith(userId, reviewId);
+    expect(mockReviewService.deleteReview).toHaveBeenCalledWith(mockRequest.user.userId, reviewId);
     expect(mockResponse.status).toHaveBeenCalledWith(201);
     expect(mockResponse.json).toHaveBeenCalledWith({
       data: responseBody,

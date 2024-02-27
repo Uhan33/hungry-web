@@ -10,7 +10,7 @@ export class ReviewController {
     try {
       return res.status(201).json(
         { data : await this.reviewService.createReview(
-          req.query.userId, 
+          req.user.userId, 
           req.query.storeId, 
           reviewContent, 
           rating
@@ -27,7 +27,7 @@ export class ReviewController {
   getReview = async (req, res, next) => {
     try {
       return res.status(201).json(
-        { data : await this.reviewService.getReview(req.query.userId)}
+        { data : await this.reviewService.getReview(req.user.userId)}
       ); 
     } catch(error) {
       next(error);
@@ -42,8 +42,8 @@ export class ReviewController {
       return res.status(201).json(
         { 
           data : await this.reviewService.updateReview(
-          req.query.userId, 
           req.query.reviewId, 
+          req.user.userId, 
           reviewContent, 
           rating
           ),
@@ -61,7 +61,7 @@ export class ReviewController {
     try {
       return res.status(201).json(
         { 
-          data : await this.reviewService.deleteReview(req.query.userId, req.query.reviewId),
+          data : await this.reviewService.deleteReview(req.user.userId, req.query.reviewId),
           message : "리뷰가 삭제되었습니다."
         }
       );  
