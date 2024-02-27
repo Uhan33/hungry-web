@@ -22,29 +22,30 @@ export class UsersRepository {
       },
     });
 
+    console.log('🚀 ~ UsersRepository ~ createUser= ~ createdUser:', createdUser);
     return createdUser;
   };
   loginUser = async (email, password) => {
     const user = await this.prisma.users.findFirst({
       where: { email },
-      select: { 
-        email: true, 
-        password: true, 
+      select: {
+        email: true,
+        password: true,
         point: {
           select: {
-            money: true
-          }
-        }
+            money: true,
+          },
+        },
       },
     });
     return user;
   };
-  
+
   findByUserEmail = async (email) => {
-      const emailUser = await this.prisma.users.findFirst({
-        where: { email },
-      });
-      console.log("🚀 ~ UsersRepository ~ findByUserEmail= ~ findByUserEmail:", emailUser)
-      return emailUser;
+    const emailUser = await this.prisma.users.findFirst({
+      where: { email },
+    });
+    console.dir(emailUser);
+    return emailUser;
   };
 }
