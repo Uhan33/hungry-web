@@ -6,10 +6,10 @@ export default class OrdersController {
   order = async (req, res, next) => {
     try {
       // 로그인 기능 merge하면 수정 예정정
-      const { userId, storeId, menus } = req.body;
+      const { storeId, menus, userId } = req.body;
+    //   const { userId } = req.user;
 
-      if(!storeId || !menus)
-        return res.status(400).json({message: '주문 정보가 올바르지 않습니다,'});
+      if (!storeId || !menus) return res.status(400).json({ message: '주문 정보가 올바르지 않습니다.' });
 
       const order = await this.ordersService.order(userId, storeId, menus);
       return res.status(201).json({ data: order });
@@ -20,7 +20,13 @@ export default class OrdersController {
 
   orderCheck = async (req, res, next) => {
     try {
-        return res.status(200).json({message: '성공!'});
+    //   const { userId } = req.user;
+        const {userId} = req.body;
+      const { status, value } = req.query;
+      const { page = 1, perPage = 10 } = req.query;
+
+      const orders = await this.ordersService.orderCheck(userId, status, value, page, perPage);
+      return res.status(200).json({ data: orders });
     } catch (err) {
       next(err);
     }
@@ -28,13 +34,28 @@ export default class OrdersController {
 
   orderCheckById = async (req, res, next) => {
     try {
+    //   const { userId } = req.user;
+      const {userId} = req.body;
+      const { orderId } = req.params;
+
+      const order = await this.ordersService.orderCheckById(userId, orderId);
+
+      return res.status(200).json({ data: order });
     } catch (err) {
       next(err);
     }
   };
 
-  orderComplete = async (req, res, next) => {
+  orderStatusChange = async (req, res, next) => {
     try {
+    //   const { userId } = req.user;
+      const {userId} = req.body;
+      const { orderId } = req.params;
+      const { status } = req.query;
+
+      const order = await this.ordersService.orderStatusChange(userId, orderId, status);
+
+      return res.status(200).json({ data: order });
     } catch (err) {
       next(err);
     }

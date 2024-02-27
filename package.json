@@ -5,12 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-<<<<<<< HEAD
-    "dev": "nodemon app.js",
-=======
     "dev": "nodemon ./src/app.js",
-    "format": "prettier --write *.js **/*.js",
->>>>>>> 50e40a5d1afbe3c11ce67f32fe39dbbe872bed84
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --forceExit",
     "test:silent": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --silent --forceExit",
     "test:coverage": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --coverage --forceExit",
