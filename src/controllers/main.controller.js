@@ -13,7 +13,7 @@ export class MainController {
     }
   }
 
-  //랭킹
+  //랭킹 조회
   getRanking = async (req, res, next) => {
     try {
       return res.status(201).json(
