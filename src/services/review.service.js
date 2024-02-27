@@ -1,32 +1,43 @@
+import { ReviewError } from '../exception/review.exception.error.js';
+
 export class ReviewService {
-  constructor(reviwRepository) {
-    this.reviwRepository = reviwRepository;
+  constructor(reviewRepository) {
+    this.reviewRepository = reviewRepository;
   }
 
-  createReview = async (userId, storeId, reviewContent, rating) => {
-    return await this.reviwRepository.createReview(userId, storeId, reviewContent, rating);
-  };
+  async checkUser(userId, reviewId) {
+    const review = await this.reviewRepository.checkUser(reviewId);
 
-  getReview = async (userId) => {
-    return await this.reviwRepository.getReview(userId);
-  };
+    if (!review || review.userId !== userId) {
+      throw new ReviewError('권한이 없습니다.');
+    }
+  }
 
-  updateReview = async (userId, reviewId, reviewContent, rating) => {
-    const review = await this.reviwRepository.updateReview(userId, reviewId, reviewContent, rating);
+  async createReview(userId, storeId, reviewContent, rating) {
+    return await this.reviewRepository.createReview(userId, storeId, reviewContent, rating);
+  }
 
-    if (!review) throw new Error('삭제된 리뷰입니다.');
+  async getReview(userId) {
+    return await this.reviewRepository.getReview(userId);
+  }
+
+  async updateReview(userId, reviewId, reviewContent, rating) {
+    await this.checkUser(userId, reviewId);
+    const review = await this.reviewRepository.updateReview(reviewId, reviewContent, rating);
+
+    if (!review) throw new ReviewError('삭제된 리뷰입니다.');
     return review;
   }
 
-  deleteReview = async (userId, reviewId) => {
-    const review = await this.reviwRepository.deleteReview(userId, reviewId);
+  async deleteReview(userId, reviewId) {
+    await this.checkUser(userId, reviewId);
+    const review = await this.reviewRepository.deleteReview(reviewId);
 
-    if (!review) throw new Error('삭제된 리뷰입니다.');
+    if (!review) throw new ReviewError('삭제된 리뷰입니다.');
     return review;
   }
 
-  getReviewByStoreId = async (storeId) => {
-    return await this.reviwRepository.getReviewByStoreId(storeId);
+  async getReviewByStoreId(storeId) {
+    return await this.reviewRepository.getReviewByStoreId(storeId);
   }
-
 }
