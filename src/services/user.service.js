@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { UserError } from '../exception/user.exception.error';
+import { UserError } from '../exception/user.exception.error.js';
 export class UsersService {
   constructor(usersReposity) {
     this.usersReposity = usersReposity;
@@ -33,8 +33,8 @@ export class UsersService {
     return {
       email: loggedInUser.email,
       point: loggedInUser.point,
-      accessToken: accessToken,
-      refreshToKen: refreshToKen,
+      accessToken,
+      refreshToKen,
     };
   };
 }

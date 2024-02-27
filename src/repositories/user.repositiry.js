@@ -22,7 +22,6 @@ export class UsersRepository {
       },
     });
 
-    console.log('🚀 ~ UsersRepository ~ createUser= ~ createdUser:', createdUser);
     return createdUser;
   };
   loginUser = async (email, password) => {
@@ -45,7 +44,6 @@ export class UsersRepository {
     const emailUser = await this.prisma.users.findFirst({
       where: { email },
     });
-    console.dir(emailUser);
     return emailUser;
   };
 }
