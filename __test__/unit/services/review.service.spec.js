@@ -1,5 +1,7 @@
 import { jest } from '@jest/globals';
 import { ReviewService } from '../../../src/services/review.service.js';
+import { ReviewError } from '../../../src/exception/review.exception.error.js';
+
 
 let mockReviewRepository = {
   createReview: jest.fn(),
@@ -110,5 +112,27 @@ describe('ReviewService Unit Test', () => {
     const result = await reviewService.getReviewByStoreId(storeId);
     expect(result).toEqual(expectedReview);
     expect(mockReviewRepository.getReviewByStoreId).toHaveBeenCalledWith(storeId);
+  });
+
+  it('수정/삭제할 리뷰가 없을 경우 reviewError', async () => {
+    const userId = 1;
+    const reviewId = 1;
+
+    mockReviewRepository.checkUser.mockResolvedValue(null);
+    await expect(reviewService.updateReview(userId, reviewId, 'reviewContent', 5)).rejects.toThrow(ReviewError);
+    
+    mockReviewRepository.checkUser.mockResolvedValue({ userId: 2 }); // 유저가 다르게 설정
+    await expect(reviewService.deleteReview(userId, reviewId)).rejects.toThrow(ReviewError);
+  });
+
+  it('수정/삭제할 권한이 없거나 리뷰가 없을 경우 reviewError', async () => {
+    const userId = 1;
+    const reviewId = 1;
+
+    mockReviewRepository.checkUser.mockResolvedValue({ userId: 2 }); // 유저가 다르게 설정
+    await expect(reviewService.updateReview(userId, reviewId, 'reviewContent', 5)).rejects.toThrow(ReviewError);
+
+    mockReviewRepository.checkUser.mockResolvedValue(null);
+    await expect(reviewService.deleteReview(userId, reviewId)).rejects.toThrow(ReviewError);
   });
 });
