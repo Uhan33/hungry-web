@@ -44,6 +44,7 @@ export class UsersRepository {
       const emailUser = await this.prisma.users.findFirst({
         where: { email },
       });
+      console.log("🚀 ~ UsersRepository ~ findByUserEmail= ~ findByUserEmail:", emailUser)
       return emailUser;
   };
 }

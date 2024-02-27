@@ -5,25 +5,21 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-<<<<<<< HEAD
-    "dev": "nodemon app.js",
-=======
     "dev": "nodemon ./src/app.js",
     "format": "prettier --write *.js **/*.js",
->>>>>>> 50e40a5d1afbe3c11ce67f32fe39dbbe872bed84
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --forceExit",
     "test:silent": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --silent --forceExit",
     "test:coverage": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --coverage --forceExit",
     "test:unit": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest __tests__/unit --forceExit"
   },
   "dependencies": {
-    "@prisma/client": "^5.10.2",
+    "@prisma/client": "5.10.2",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
-    "prisma": "^5.10.2",
+    "prisma": "5.10.2",
     "winston": "^3.11.0"
   },
   "devDependencies": {
