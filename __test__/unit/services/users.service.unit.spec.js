@@ -22,6 +22,7 @@ describe('User Service Unit Test', () => {
       const addr = 'Test Address';
       const number = '010-1234-6678';
       const role = 'user';
+      const userId = 1;
 
       // 성공 사례이니까
       mockRepository.findByUserEmail.mockResolvedValue(null);
@@ -36,7 +37,7 @@ describe('User Service Unit Test', () => {
         addr,
         number,
         role,
-        point: 1000000,
+        userId: 1,
       };
       mockRepository.createUser.mockResolvedValue(createdUser);
 
@@ -45,12 +46,12 @@ describe('User Service Unit Test', () => {
 
       // 생성된 유저와 반환된 결과 비교
       expect(result).toEqual({
+        userId: createdUser.userId,
         email: createdUser.email,
         name: createdUser.name,
         addr: createdUser.addr,
         number: createdUser.number,
         role: createdUser.role,
-        point: createdUser.point,
       });
 
       expect(mockRepository.findByUserEmail).toHaveBeenCalledWith(email);
