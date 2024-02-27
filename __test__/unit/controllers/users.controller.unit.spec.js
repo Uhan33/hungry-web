@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 import { UsersController } from '../../../src/controllers/user.controller.js';
 import { expect } from '@jest/globals';
 
-describe('UserManagement', () => {
+describe('User Controller Unit Test', () => {
   // 사전에 필요한 mock 데이터 세팅
   let mockReq;
   let mockRes;
@@ -124,23 +124,19 @@ describe('UserManagement', () => {
 
   describe('유저 로그인', () => {
     test('로그인 성공 시', async () => {
-        const userSignIn = {
-            email: 'test14@naver.com',
-            password: '123456',
-        }
-      mockReq.body = userSignIn
+      const userSignIn = {
+        email: 'test14@naver.com',
+        password: '123456',
+      };
+      mockReq.body = userSignIn;
 
       mockUserService.loginUser.mockResolvedValue(userSignIn);
 
-    
-    
       await usersController.userSignIn(mockReq, mockRes, mockNext);
 
       expect(mockRes.status).toHaveBeenCalledWith(201);
-      expect(mockRes.json).toHaveBeenCalledWith({data: userSignIn})
-      expect(mockUserService.loginUser).toHaveBeenCalledWith(
-        userSignIn.email,
-        userSignIn.password)
+      expect(mockRes.json).toHaveBeenCalledWith({ data: userSignIn });
+      expect(mockUserService.loginUser).toHaveBeenCalledWith(userSignIn.email, userSignIn.password);
     });
   });
 });

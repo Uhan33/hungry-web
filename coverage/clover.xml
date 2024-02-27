@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1709018547056" clover="3.2.0">
-  <project timestamp="1709018547056" name="All files">
-    <metrics statements="259" coveredstatements="244" conditionals="61" coveredconditionals="58" methods="75" coveredmethods="74" elements="395" coveredelements="376" complexity="0" loc="259" ncloc="259" packages="3" files="15" classes="15"/>
+<coverage generated="1709019272189" clover="3.2.0">
+  <project timestamp="1709019272189" name="All files">
+    <metrics statements="274" coveredstatements="255" conditionals="67" coveredconditionals="59" methods="78" coveredmethods="77" elements="419" coveredelements="391" complexity="0" loc="274" ncloc="274" packages="3" files="16" classes="16"/>
     <package name="controllers">
       <metrics statements="112" coveredstatements="99" conditionals="41" coveredconditionals="41" methods="22" coveredmethods="22"/>
       <file name="main.controller.js" path="C:\Users\USER\Desktop\hungry\src\controllers\main.controller.js">
@@ -133,7 +133,7 @@
       </file>
     </package>
     <package name="repositories">
-      <metrics statements="89" coveredstatements="87" conditionals="4" coveredconditionals="3" methods="34" coveredmethods="33"/>
+      <metrics statements="90" coveredstatements="90" conditionals="4" coveredconditionals="3" methods="34" coveredmethods="34"/>
       <file name="main.repository.js" path="C:\Users\USER\Desktop\hungry\src\repositories\main.repository.js">
         <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="6"/>
         <line num="3" count="1" type="stmt"/>
@@ -229,7 +229,7 @@
         <line num="53" count="1" type="stmt"/>
       </file>
       <file name="user.repositiry.js" path="C:\Users\USER\Desktop\hungry\src\repositories\user.repositiry.js">
-        <metrics statements="10" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="3" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -238,12 +238,13 @@
         <line num="28" count="1" type="stmt"/>
         <line num="40" count="1" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
       </file>
     </package>
     <package name="services">
-      <metrics statements="58" coveredstatements="58" conditionals="16" coveredconditionals="14" methods="19" coveredmethods="19"/>
+      <metrics statements="72" coveredstatements="66" conditionals="22" coveredconditionals="15" methods="22" coveredmethods="21"/>
       <file name="main.service.js" path="C:\Users\USER\Desktop\hungry\src\services\main.service.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="3" count="1" type="stmt"/>
@@ -313,6 +314,23 @@
         <line num="31" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="33" count="1" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
+      </file>
+      <file name="user.service.js" path="C:\Users\USER\Desktop\hungry\src\services\user.service.js">
+        <metrics statements="14" coveredstatements="8" conditionals="6" coveredconditionals="1" methods="3" coveredmethods="2"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
       </file>
     </package>
   </project>
