@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import send from '../utils/mail.js';
+
 import { UserError } from '../exception/user.exception.error.js';
 export class UsersService {
   constructor(usersReposity) {
@@ -10,6 +12,7 @@ export class UsersService {
     if (user) throw new UserError('이미 존재하는 email입니다.');
     const hashedPassword = await bcrypt.hash(password, 10);
     const createdUser = await this.usersReposity.createUser(email, name, hashedPassword, addr, number, role);
+    await send();
     return {
       email: createdUser.email,
       name: createdUser.name,
