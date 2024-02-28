@@ -23,12 +23,17 @@ describe('User Repository Unit Test', () => {
         addr: '청주시',
         number: '123456',
         role: 'owner',
+        point: {
+          create: {
+            money: 0,
+          },
+        },
       };
       const createdUser = {
         ...userData,
         point: {
           create: {
-            money: 1000000,
+            money: 0,
           },
         },
       };
@@ -45,6 +50,14 @@ describe('User Repository Unit Test', () => {
       expect(mockPrisma.users.create).toHaveBeenCalledWith({
         data: {
           ...userData,
+          point: {
+            create: {
+              money: 0,
+            },
+          },
+        },
+        include: {
+          point: true,
         },
       });
     });
@@ -54,6 +67,7 @@ describe('User Repository Unit Test', () => {
       const userData = {
         email: 'test@test.com',
         password: '1234456',
+        userId: 1,
       };
       const foundUser = {
         ...userData,
@@ -69,6 +83,7 @@ describe('User Repository Unit Test', () => {
       expect(mockPrisma.users.findFirst).toHaveBeenCalledWith({
         where: { email: userData.email },
         select: {
+          userId: true,
           email: true,
           password: true,
           point: {
