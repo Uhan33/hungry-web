@@ -22,6 +22,9 @@ export class MenusRepository {
       where: {userId: userId}
     })
 
+    if(!store)
+      throw new Error('업장 정보가 업습니다.');
+
     const Menus = await this.prisma.menus.findMany({
       where: {storeId: store.storeId}
     });

@@ -12,8 +12,8 @@ export class MenusService {
     return createdMenu;
   };
 
-  getMenus = async () => {
-    const Menus = await this.menusRepository.getMenus();
+  getMenus = async (userId) => {
+    const Menus = await this.menusRepository.getMenus(userId);
 
     return Menus;
   };
