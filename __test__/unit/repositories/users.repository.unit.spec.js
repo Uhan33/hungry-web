@@ -54,6 +54,7 @@ describe('User Repository Unit Test', () => {
       const userData = {
         email: 'test@test.com',
         password: '1234456',
+        userId: 1,
       };
       const foundUser = {
         ...userData,
@@ -69,6 +70,7 @@ describe('User Repository Unit Test', () => {
       expect(mockPrisma.users.findFirst).toHaveBeenCalledWith({
         where: { email: userData.email },
         select: {
+          userId: true,
           email: true,
           password: true,
           point: {
