@@ -221,6 +221,13 @@ const specs = swaggereJsdoc(options);
  *      - menus
  *      summary: 메뉴 등록
  *      description: 메뉴 등록
+ *      parameters:
+ *        - name: storeId
+ *          in: path
+ *          description: 메뉴 등록할 업장 storeId 입력
+ *          required: true
+ *          schema:
+ *            type: integer
  *      requestBody:
  *        required: true
  *        content:
@@ -436,7 +443,7 @@ const specs = swaggereJsdoc(options);
  *      summary: 리뷰 삭제
  *      description: 리뷰 삭제
  *      parameters:
- *        - name: review
+ *        - name: reviewId
  *          in: query
  *          description: 삭제할 리뷰 reviewId 입력
  *          required: true
