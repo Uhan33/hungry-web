@@ -11,14 +11,6 @@ export class UsersRepository {
         addr,
         number,
         role,
-        point: {
-          create: {
-            money: 1000000,
-          },
-        },
-      },
-      include: {
-        point: true,
       },
     });
 
@@ -28,6 +20,7 @@ export class UsersRepository {
     const user = await this.prisma.users.findFirst({
       where: { email },
       select: {
+        userId: true,
         email: true,
         password: true,
         point: {

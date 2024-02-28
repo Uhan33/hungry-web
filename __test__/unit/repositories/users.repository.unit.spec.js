@@ -45,14 +45,6 @@ describe('User Repository Unit Test', () => {
       expect(mockPrisma.users.create).toHaveBeenCalledWith({
         data: {
           ...userData,
-          point: {
-            create: {
-              money: 1000000,
-            },
-          },
-        },
-        include: {
-          point: true,
         },
       });
     });
