@@ -11,6 +11,14 @@ export class UsersRepository {
         addr,
         number,
         role,
+        point: {
+          create: {
+            money: 0,
+          },
+        },
+      },
+      include: {
+        point: true,
       },
     });
 

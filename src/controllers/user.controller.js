@@ -52,10 +52,10 @@ export class UsersController {
       const { email } = req.body;
       const user = await this.usersRepository.findByUserEmail(email);
       const userId = await this.pointRepository.findUserById(user.userId);
+      await sendMail(email, validationCode);
       if (userId) return res.status(400).json({ message: '이미 포인트를 지급하였습니다.' });
       if (user.role !== 'user') return res.status(400).json({ message: '사용자만 포인트 적립을 받을 수 있습니다.' });
       const validationCode = generateValidationCode(6);
-      await sendMail(email, validationCode);
       const token = await this.usersService.generateToken(email);
       if (token) {
         await this.pointRepository.signUpPoint(user.userId);
