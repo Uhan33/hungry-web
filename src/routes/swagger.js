@@ -62,7 +62,7 @@ const specs = swaggereJsdoc(options);
  *        description: 회원가입 성공
  *       400:
  *        description: 이미 존재하는 이메일입니다. / 요청 값 존재하지 않음
- *  /api/users/login:
+ *  /api/users/sign-in:
  *    post:
  *      tags:
  *      - users
@@ -88,6 +88,27 @@ const specs = swaggereJsdoc(options);
  *        description: 로그인 성공
  *       400:
  *        description: 이메일 혹은 비밀번호가 일치하지 않음
+ *  /api/users/sendEmail:
+ *    post:
+ *      tags:
+ *      - users
+ *      summary: 이메일 인증
+ *      description: 이메일 인증
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                email:
+ *                  type: string
+ *                  required: true
+ *      produces:
+ *      - application/json
+ *      responses:
+ *       400:
+ *        description: 포인트 중복 지급 불가 / user만 포인트 지급 가능
  *  /api/stores:
  *    post:
  *      tags:
@@ -319,7 +340,7 @@ const specs = swaggereJsdoc(options);
  *          in: query
  *          description: 검색 키워드 입력
  *          schema:
- *            type: integer
+ *            type: string
  *      produces:
  *      - application/json
  *      responses:
@@ -486,7 +507,7 @@ const specs = swaggereJsdoc(options);
  *          description: 조회할 상태 (order / delivering / success / cancel)
  *          required: true
  *          schema:
- *            type: integer
+ *            type: string
  *            default: all
  *        - name: value
  *          in: query
@@ -523,7 +544,7 @@ const specs = swaggereJsdoc(options);
  *      summary: 주문 단건 조회
  *      description: 주문 단건 조회
  *      parameters:
- *        - name: storeId
+ *        - name: orderId
  *          in: path
  *          description: 조회할 주문내역 orderId
  *          required: true

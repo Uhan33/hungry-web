@@ -132,7 +132,7 @@ export default class OrdersRepository {
     const store = await this.prisma.stores.findFirst({
       where: { userId: +userId },
     });
-    if (userId !== store.userId) throw new OrdersError('권한이 없습니다.');
+    if (!store || (userId !== store.userId)) throw new OrdersError('권한이 없습니다.');
 
     if (status === 'success') {
       if (order.status === 'success') throw new OrdersError('완료된 주문입니다.');

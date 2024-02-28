@@ -14,6 +14,6 @@ const ordersController = new OrdersController(ordersService);
 router.post('/order', authMiddleware, ordersController.order);
 router.get('/', authMiddleware, ordersController.orderCheck);
 router.get('/:orderId', authMiddleware, ordersController.orderCheckById);
-router.get('/:orderId/orderStatusChange', authMiddleware, ordersController.orderStatusChange);
+router.post('/:orderId/orderStatusChange', authMiddleware, ordersController.orderStatusChange);
 
 export default router;
