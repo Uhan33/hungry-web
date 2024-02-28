@@ -139,4 +139,21 @@ describe('User Controller Unit Test', () => {
       expect(mockUserService.loginUser).toHaveBeenCalledWith(userSignIn.email, userSignIn.password);
     });
   });
+  describe('이메일 인증 및 포인트 추가', () => {
+    test('로그인 성공 시', async () => {
+      const userSignIn = {
+        email: 'test14@naver.com',
+        password: '123456',
+      };
+      mockReq.body = userSignIn;
+
+      mockUserService.loginUser.mockResolvedValue(userSignIn);
+
+      await usersController.emailAuth(mockReq, mockRes, mockNext);
+
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({ data: userSignIn });
+      expect(mockUserService.loginUser).toHaveBeenCalledWith(userSignIn.email, userSignIn.password);
+    });
+  });
 });

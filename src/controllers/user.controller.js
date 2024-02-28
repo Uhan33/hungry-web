@@ -59,7 +59,7 @@ export class UsersController {
       const token = await this.usersService.generateToken(email);
       if (token) {
         await this.pointRepository.signUpPoint(user.userId);
-        res.json({ token });
+        return res.status(201).json({ token });
       }
     } catch (err) {
       next(err);
