@@ -3,8 +3,8 @@ import { PointRepository } from '../../../src/repositories/point.repository.js';
 
 let mockPrisma = {
   point: {
-    create: jest.fn(),
     findUserById: jest.fn(),
+    update: jest.fn(),
   },
 };
 
@@ -15,12 +15,12 @@ describe('Point Repository Unit Test', () => {
   });
 
   describe('포인트 생성', () => {
-    test('생성 성공', async () => {
+    test('생성 추가', async () => {
       const samplePoint = {
         userId: 1,
         money: 1000000,
       };
-      mockPrisma.point.create.mockResolvedValue(samplePoint);
+      mockPrisma.point.update.mockResolvedValue(samplePoint);
       const addPoint = await pointRepository.signUpPoint(samplePoint.userId);
       expect(addPoint).toEqual(samplePoint);
     });

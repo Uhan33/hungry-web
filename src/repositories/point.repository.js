@@ -4,7 +4,8 @@ export class PointRepository {
   }
 
   signUpPoint = async (userId) => {
-    return await this.prisma.point.create({
+    return await this.prisma.point.update({
+      where: { userId },
       data: {
         userId: +userId,
         money: 1000000,
