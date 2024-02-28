@@ -11,4 +11,10 @@ export class PointRepository {
       },
     });
   };
+  findUserById = async (userId) => {
+    const user = await this.prisma.point.findFirst({
+      where: { userId },
+    });
+    return user;
+  };
 }

@@ -9,10 +9,10 @@ const router = express.Router();
 const usersRepository = new UsersRepository(prisma);
 const usersService = new UsersService(usersRepository);
 const pointRepository = new PointRepository(prisma);
-const usersController = new UsersController(usersService, pointRepository);
+const usersController = new UsersController(usersService, pointRepository, usersRepository);
 
 router.post('/sign-up', usersController.userSignUp);
 router.post('/sign-in', usersController.userSignIn);
-router.post('/sendEmail/:userId', usersController.emailAuth);
+router.post('/sendEmail', usersController.emailAuth);
 
 export default router;

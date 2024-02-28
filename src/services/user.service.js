@@ -39,8 +39,8 @@ export class UsersService {
       refreshToKen,
     };
   };
-  generateToken = async (email, role) => {
-    const token = jwt.sign({ email, role }, process.env.SECRET_KEY, { expiresIn: '1h' });
+  generateToken = async (email) => {
+    const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1h' });
     return token;
   };
 }

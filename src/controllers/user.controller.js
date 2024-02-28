@@ -1,8 +1,9 @@
 import { sendMail, generateValidationCode } from '../middlewares/mail.middleware.js';
 export class UsersController {
-  constructor(usersService, pointRepository) {
+  constructor(usersService, pointRepository, usersRepository) {
     this.usersService = usersService;
     this.pointRepository = pointRepository;
+    this.usersRepository = usersRepository;
   }
 
   userSignUp = async (req, res, next) => {
@@ -48,12 +49,16 @@ export class UsersController {
 
   emailAuth = async (req, res, next) => {
     try {
-      const { email, role, userId } = req.body;
+      const { email } = req.body;
+      const user = await this.usersRepository.findByUserEmail(email);
+      const userId = await this.pointRepository.findUserById(user.userId);
+      if (userId) return res.status(400).json({ message: '이미 포인트를 지급하였습니다.' });
+      if (user.role !== 'user') return res.status(400).json({ message: '사용자만 포인트 적립을 받을 수 있습니다.' });
       const validationCode = generateValidationCode(6);
       await sendMail(email, validationCode);
-      const token = await this.usersService.generateToken(email, role);
+      const token = await this.usersService.generateToken(email);
       if (token) {
-        await this.pointRepository.signUpPoint(userId);
+        await this.pointRepository.signUpPoint(user.userId);
         res.json({ token });
       }
     } catch (err) {
