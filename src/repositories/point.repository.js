@@ -4,13 +4,14 @@ export class PointRepository {
   }
 
   signUpPoint = async (userId) => {
-    await this.prisma.point.create({
+    return await this.prisma.point.create({
       data: {
         userId: +userId,
         money: 1000000,
       },
     });
   };
+
   findUserById = async (userId) => {
     const user = await this.prisma.point.findFirst({
       where: { userId },

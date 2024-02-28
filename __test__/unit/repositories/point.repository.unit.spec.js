@@ -22,7 +22,7 @@ describe('Point Repository Unit Test', () => {
       };
       mockPrisma.point.create.mockResolvedValue(samplePoint);
       const addPoint = await pointRepository.signUpPoint(samplePoint.userId);
-      expect(addPoint).toBe(samplePoint);
+      expect(addPoint).toEqual(samplePoint);
     });
   });
 });
