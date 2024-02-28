@@ -2,21 +2,23 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserError } from '../exception/user.exception.error.js';
 export class UsersService {
-  constructor(usersReposity) {
+  constructor(usersReposity, pointRepository) {
     this.usersReposity = usersReposity;
+    this.pointRepository = pointRepository;
   }
   createUser = async (email, name, password, confirmPassword, addr, number, role) => {
     const user = await this.usersReposity.findByUserEmail(email);
     if (user) throw new UserError('이미 존재하는 email입니다.');
     const hashedPassword = await bcrypt.hash(password, 10);
     const createdUser = await this.usersReposity.createUser(email, name, hashedPassword, addr, number, role);
+
     return {
+      userId: createdUser.userId,
       email: createdUser.email,
       name: createdUser.name,
       addr: createdUser.addr,
       number: createdUser.number,
       role: createdUser.role,
-      point: createdUser.point,
     };
   };
   loginUser = async (email, password) => {
@@ -36,5 +38,9 @@ export class UsersService {
       accessToken,
       refreshToKen,
     };
+  };
+  generateToken = async (email) => {
+    const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    return token;
   };
 }
