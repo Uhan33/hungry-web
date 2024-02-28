@@ -1,3 +1,5 @@
+import { OrdersError } from "../exception/orders.exception.error.js";
+
 export default class OrdersRepository {
   constructor(prisma) {
     this.prisma = prisma;
@@ -21,7 +23,7 @@ export default class OrdersRepository {
       },
     });
 
-    if (menu.length !== menus.length) throw new Error('메뉴 정보가 올바르지 않습니다.');
+    if (menu.length !== menus.length) throw new OrdersError('메뉴 정보가 올바르지 않습니다.');
 
     const order = await this.prisma.$transaction(async (tx) => {
       const makeOrder = await tx.orders.create({
@@ -74,7 +76,7 @@ export default class OrdersRepository {
     const store = await this.prisma.stores.findFirst({
       where: { userId: +userId },
     });
-    if (!store) throw new Error('운영중인 가게가 없습니다.');
+    if (!store) throw new OrdersError('운영중인 가게가 없습니다.');
 
     let orders;
 
@@ -106,13 +108,13 @@ export default class OrdersRepository {
       where: { orderId: +orderId },
     });
 
-    if (!order) throw new Error('존재하지 않는 주문 내역입니다.');
+    if (!order) throw new OrdersError('존재하지 않는 주문 내역입니다.');
 
     if (order.userId !== userId) {
       const store = await this.prisma.stores.findFirst({
         where: { storeId: order.storeId },
       });
-      if (store.userId !== userId) throw new Error('열람 권한이 없습니다.');
+      if (store.userId !== userId) throw new OrdersError('열람 권한이 없습니다.');
     }
 
     return order;
@@ -125,15 +127,15 @@ export default class OrdersRepository {
       where: { orderId: +orderId },
     });
 
-    if (!order) throw new Error('존재하지 않는 주문 내역입니다.');
+    if (!order) throw new OrdersError('존재하지 않는 주문 내역입니다.');
 
     const store = await this.prisma.stores.findFirst({
       where: { userId: +userId },
     });
-    if (userId !== store.userId) throw new Error('권한이 없습니다.');
+    if (userId !== store.userId) throw new OrdersError('권한이 없습니다.');
 
     if (status === 'success') {
-      if (order.status === 'success') throw new Error('완료된 주문입니다.');
+      if (order.status === 'success') throw new OrdersError('완료된 주문입니다.');
 
       updatedOrder = await this.prisma.$transaction(async (tx) => {
         const order = await tx.orders.update({
