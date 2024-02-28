@@ -6,7 +6,7 @@ export class MenusRepository {
   createMenu = async (storeId, menuName, menuImage, price, content) => {
     const createdMenu = await this.prisma.menus.create({
       data: {
-        storeId,
+        storeId: +storeId,
         menuName,
         menuImage,
         price,
@@ -17,15 +17,21 @@ export class MenusRepository {
     return createdMenu;
   };
 
-  getMenus = async () => {
-    const Menus = await this.prisma.menus.findMany();
+  getMenus = async (userId) => {
+    const store = await this.prisma.stores.findFirst({
+      where: {userId: userId}
+    })
+
+    const Menus = await this.prisma.menus.findMany({
+      where: {storeId: store.storeId}
+    });
 
     return Menus;
   };
 
   getMenu = async (storeId, menuId) => {
     const Menu = await this.prisma.menus.findFirst({
-      where: { storeId: +storeId, munuId: +menuId },
+      where: { storeId: +storeId, menuId: +menuId },
     });
 
     return Menu;
@@ -41,7 +47,7 @@ export class MenusRepository {
 
   updateMenu = async (storeId, menuId, menuName, menuImage, price, content) => {
     const updatedMenu = await this.prisma.menus.update({
-      where: { storeId: +storeId, munuId: +menuId },
+      where: { storeId: +storeId, menuId: +menuId },
       data: {
         menuName,
         menuImage,
@@ -55,7 +61,7 @@ export class MenusRepository {
 
   deleteMenu = async (storeId, menuId) => {
     const deletedMenu = await this.prisma.menus.delete({
-      where: { storeId: +storeId, munuId: +menuId },
+      where: { storeId: +storeId, menuId: +menuId },
     });
 
     return deletedMenu;

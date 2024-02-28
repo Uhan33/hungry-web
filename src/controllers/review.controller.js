@@ -8,76 +8,64 @@ export class ReviewController {
     const { reviewContent, rating } = req.body;
 
     try {
-      return res.status(201).json(
-        { data : await this.reviewService.createReview(
-          req.user.userId, 
-          req.query.storeId, 
-          reviewContent, 
-          rating
-          ),
-          message : "리뷰가 작성되었습니다."
-        }
-      );   
-    } catch(error) {
+      return res
+        .status(201)
+        .json({
+          data: await this.reviewService.createReview(req.user.userId, req.query.storeId, reviewContent, rating),
+          message: '리뷰가 작성되었습니다.',
+        });
+    } catch (error) {
       next(error);
     }
-  }
+  };
 
   //내 리뷰 조회
   getReview = async (req, res, next) => {
     try {
-      return res.status(201).json(
-        { data : await this.reviewService.getReview(req.user.userId)}
-      ); 
-    } catch(error) {
+      return res.status(201).json({ data: await this.reviewService.getReview(req.user.userId) });
+    } catch (error) {
       next(error);
     }
-  }
+  };
 
   //리류 수정
   updateReview = async (req, res, next) => {
     const { reviewContent, rating } = req.body;
-    
+
     try {
-      return res.status(201).json(
-        { 
-          data : await this.reviewService.updateReview(
-          req.query.reviewId, 
-          req.user.userId, 
-          reviewContent, 
+      return res.status(201).json({
+        data: await this.reviewService.updateReview(
+          req.user.userId,
+          req.query.reviewId,
+          reviewContent,
           rating
-          ),
-          message : "리뷰가 수정되었습니다."
-        }
-      );   
-    } catch(error) {
+        ),
+        message: '리뷰가 수정되었습니다.',
+      });
+    } catch (error) {
       next(error);
     }
-  }
+  };
 
   //리뷰 삭제
-  
+
   deleteReview = async (req, res, next) => {
     try {
-      return res.status(201).json(
-        { 
-          data : await this.reviewService.deleteReview(req.user.userId, req.query.reviewId),
-          message : "리뷰가 삭제되었습니다."
-        }
-      );  
-    } catch(error) {
+      return res.status(201).json({
+        data: await this.reviewService.deleteReview(req.user.userId, req.query.reviewId),
+        message: '리뷰가 삭제되었습니다.',
+      });
+    } catch (error) {
       next(error);
     }
-  }
+  };
 
   //가게 리뷰 조회
   getReviewByStoreId = async (req, res, next) => {
     try {
-      return res.status(201).json(
-        { data : await this.reviewService.getReviewByStoreId(req.query.storeId)}
-      ); 
-    } catch(error) {
+      return res.status(201).json({ data: await this.reviewService.getReviewByStoreId(req.query.storeId) });
+    } catch (error) {
       next(error);
     }
-  }
+  };
 }

@@ -5,9 +5,8 @@ export default class OrdersController {
 
   order = async (req, res, next) => {
     try {
-      // 로그인 기능 merge하면 수정 예정정
-      const { storeId, menus, userId } = req.body;
-      //   const { userId } = req.user;
+      const { storeId, menus } = req.body;
+      const { userId } = req.user;
 
       if (!storeId || !menus) return res.status(400).json({ message: '주문 정보가 올바르지 않습니다.' });
 
@@ -20,8 +19,7 @@ export default class OrdersController {
 
   orderCheck = async (req, res, next) => {
     try {
-      //   const { userId } = req.user;
-      const { userId } = req.body;
+      const { userId } = req.user;
       const { status, value } = req.query;
       const { page = 1, perPage = 10 } = req.query;
 
@@ -34,8 +32,7 @@ export default class OrdersController {
 
   orderCheckById = async (req, res, next) => {
     try {
-      //   const { userId } = req.user;
-      const { userId } = req.body;
+      const { userId } = req.user;
       const { orderId } = req.params;
 
       const order = await this.ordersService.orderCheckById(userId, orderId);
@@ -48,8 +45,7 @@ export default class OrdersController {
 
   orderStatusChange = async (req, res, next) => {
     try {
-      //   const { userId } = req.user;
-      const { userId } = req.body;
+      const { userId } = req.user;
       const { orderId } = req.params;
       const { status } = req.query;
 

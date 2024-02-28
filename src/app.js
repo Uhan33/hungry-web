@@ -3,6 +3,7 @@ import router from './routes/index.js';
 import LogMiddleware from './middlewares/log.middleware.js';
 import ErrorHandlingMiddleware from './middlewares/error-handling.middleware.js';
 import cookieParser from 'cookie-parser';
+import { swaggerUi, specs } from "./routes/swagger.js";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -13,6 +14,7 @@ const port = 3000;
 app.use(LogMiddleware);
 app.use(express.json());
 app.use(cookieParser());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/api', router);
 
 app.use(ErrorHandlingMiddleware);
