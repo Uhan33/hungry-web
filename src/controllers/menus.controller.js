@@ -22,7 +22,8 @@ export class MenusController {
   // 메뉴 목록 조회
   getMenus = async (req, res, next) => {
     try {
-      const Menus = await this.menusService.getMenus();
+      const {userId} = req.user;
+      const Menus = await this.menusService.getMenus(userId);
 
       return res.status(200).json({ data: Menus });
     } catch (err) {

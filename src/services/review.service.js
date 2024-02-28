@@ -19,7 +19,9 @@ export class ReviewService {
   
   //유효성 검사
   async checkUser(userId, reviewId) {
+    console.log(userId, reviewId);
     const review = await this.reviewRepository.checkUser(reviewId);
+    console.log(review);
 
     if (!review || review.userId !== userId) {
       throw new ReviewError('권한이 없습니다.');
